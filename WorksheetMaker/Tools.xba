@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Tools" script:language="StarBasic">
+function ErstelleTextcursor()
+	Dim oDoc , oViewC, oTextC, oZelle as object
+	
+    oDoc = ThisComponent
+	oViewC = oDoc.getCurrentController().getViewCursor()
+
+    If ThisComponent.CurrentSelection.SupportsService(&quot;com.sun.star.drawing.ShapeCollection&quot;) then
+	  	ErstelleTextcursor = oTxtObj
+		exit Function
+    ElseIf ThisComponent.CurrentSelection.SupportsService(&quot;com.sun.star.text.TextGraphicObject&quot;) then
+		ErstelleTextcursor = oTxtObj
+	  	exit Function
+    end if
+
+	if not isEmpty(oViewC.textTable) then  &apos; in einer Texttabelle	
+		oZelle = oViewC.Cell
+    	oTextC = oZelle.getText().createTextCursorByRange(oViewC)
+    	
+  	elseIf not isEmpty(oViewC.textFrame) then  &apos;in einem Textrahmen
+		oFrame = oViewC.textFrame.text
+		oTextC = oFrame.getText().createTextCursorByRange(oViewC)  
+		
+	elseIf not isEmpty(oViewC.textSection) then  &apos;in einem Textbereich
+    	oTxtObj = ThisComponent.text 
+    	oTextC = oTxtObj.getText().createTextCursorByRange(oViewC)  
+    	  	
+  	elseIf not isEmpty(oViewC.textField) then &apos;in oder am Anfang eines Textfeldes	
+  		oFrame = oViewC.textField
+		oTextC = oFrame.getText().createTextCursorByRange(oViewC)  
+		
+ 	ElseIf oViewC.getText.ImplementationName = &quot;SwXFootnote&quot; then &apos;in einer Fussnote
+    	msgbox sName &amp; &quot;befindet sich in einer Fussnote.&quot;
+    	
+  	ElseIf oViewC.getText.ImplementationName = &quot;SwXEndnote&quot; then &apos;in einer Endnote
+    	msgbox sName &amp; &quot;befindet sich in einer Endnote.&quot;
+    	
+  	ElseIf oViewC.getText.ImplementationName = &quot;SwXHeadFootText&quot; then &apos;in der Kopf- oder Fusszeile
+	    oTxtObj = oViewC.getText()
+  	else
+    	oTextC = oDoc.text.createTextCursorByRange(oViewC)
+  end if
+
+  ErstelleTextcursor = oTextC   &apos;Rückgabe: das Textobjekt, evt. leer
+end function
+
+
+
+
+sub AdaptFormulaTextFontAndSizeToEnvironment
+	dim oCurrentController as variant: oCurrentController = ThisComponent.getCurrentController()
+	dim oDoc as variant: oDoc=ThisComponent
+	if not(oCurrentController.supportsService(&quot;com.sun.star.text.TextDocumentView&quot;)) then
+	    msgbox(&quot;Macro works only in text documents.&quot;)
+	    exit sub
+	end if
+	dim oModelTextDocument as variant: oModelTextDocument = oCurrentController.Model
+	dim oEmbeddedObjects as variant: oEmbeddedObjects = oModelTextDocument.EmbeddedObjects
+	dim nIndex as long
+	dim nEndIndex as long: nEndIndex = oEmbeddedObjects.Count-1
+	dim oEmbeddedObject as variant
+	dim oModel as variant
+	dim oAnchor as variant
+	dim fCharHeight as single
+	dim sCharFontName as String
+	dim EnumItalic: EnumItalic = com.sun.star.awt.FontSlant.ITALIC
+	dim EnumOblique: EnumOblique = com.sun.star.awt.FontSlant.OBLIQUE
+	dim bIsBold as boolean
+	dim bIsItalic as boolean
+	dim oXCOEO as variant: rem oExtendedControlOverEmbeddedObject
+	
+	for nIndex=0 to nEndIndex
+	    oEmbeddedObject = oEmbeddedObjects.getByIndex(nIndex)
+	    oModel = oEmbeddedObject.Model: rem might be empty
+	    if Not(isEmpty(oModel)) then
+	        if oModel.supportsService(&quot;com.sun.star.formula.FormulaProperties&quot;) then
+	            rem It is a formula object.
+	            oAnchor = oEmbeddedObject.Anchor: rem Is NULL for page anchor
+	            if Not(isNull(oAnchor)) then
+	                if oAnchor.supportsService(&quot;com.sun.star.style.CharacterProperties&quot;) then
+	                    fCharHeight = oAnchor.CharHeight
+	                    oModel.BaseFontHeight = Int(fCharHeight): rem no decimal values for formula texts
+	                    sCharFontName = oAnchor.CharFontName
+	                    oModel.FontNameText = sCharFontName
+	                    bIsBold = (oAnchor.CharWeight&gt;=150) 
+	                    oModel.FontTextIsBold = bIsBold
+	                    oModel.FontVariablesIsBold = bIsBold
+	                    oModel.FontFunctionsIsBold = bIsBold
+	                    oModel.FontNumbersIsBold = bIsBold
+	                    bIsItalic = ((oAnchor.CharPosture = EnumItalic) OR (oAnchor.CharPosture = EnumOblique))
+	                    oModel.FontTextIsItalic = bIsItalic
+	                    oXCOEO = oEmbeddedObject.ExtendedControlOverEmbeddedObject
+	                    oXCOEO.update()
+	                end if
+	            end if
+	        end if    
+	    end if
+	next nIndex
+end sub
+
+
+
+sub AdaptFrameSizeToEnvironment
+		
+	&apos;Rahmen benennen
+	Dim RahmenNamen, RahmenAnzahl
+	RahmenNamen = &quot;MultipleChoiceLösung&quot;
+	RahmenAnzahl = 0
+	Rahmen = RahmenNamen &amp; RahmenAnzahl
+
+	&apos;Da einzelen Rahmen wieder gelöscht werden können werden nach weiteren 
+	&apos;möglichen Namen gesucht und bricht nach anschliessend die Schleige ab.
+	MaxAnzahlFehlversucheInFolge = 99
+	
+	&apos;Namen suchen, ob er bereits existiert
+	&apos;Suche nach Rahmen mit dem Namen MultipleChoiceLösung??
+	Do  
+		If ThisComponent.getTextFrames().hasByName(Rahmen) Then
+			
+			&apos;Gefundener Rahmen
+			oRahmen = ThisComponent.getTextFrames().getByName(Rahmen)
+			
+			&apos;Anker des Rahmens
+			oAnchor = oRahmen.Anchor
+			
+			&apos;Liest wenn möglich die Zeichengrösse des Anker aus und ändert die
+			&apos;Grösse des Rahmens
+			if oAnchor.supportsService(&quot;com.sun.star.style.CharacterProperties&quot;) then
+				
+				&apos;Zeichengrösse des Ankers
+				Zeichengroesse = oAnchor.CharHeight
+				
+				&apos;Rahmengrösse und Position setzen
+				With oRahmen
+					.Width = 330/12*Zeichengroesse
+					.Height = 330/12*Zeichengroesse
+					.HoriOrientPosition = 50/12*Zeichengroesse
+					.VertOrientPosition = 100/12*Zeichengroesse
+				End With
+				
+			end if
+			
+			&apos;Setzt die Anzahl Fehlversuceh wieder zurück
+			AnzahlFehlversucheInFolge = 0
+			
+		Else
+		
+			&apos;Setzt die Anzahl Fehlversuche um 1 höher und bricht bei der 
+			&apos;Erreichung des Maximums ab
+			AnzahlFehlversucheInFolge = AnzahlFehlversucheInFolge+1
+			If AnzahlFehlversucheInFolge &gt;= MaxAnzahlFehlversucheInFolge Then
+				Exit Do
+			End If
+			
+		End If
+		
+		&apos;Neuen Namen generieren für den nächsten Durchlauf
+		RahmenAnzahl = RahmenAnzahl+1
+		Rahmen = RahmenNamen &amp; RahmenAnzahl		
+
+	Loop
+	
+end sub
+
+Sub RahmenBennen(oFrame as object, RahmenNamen as string)
+
+	&apos;Rahmen benennen
+	Dim RahmenAnzahl
+	RahmenAnzahl = 0
+	Rahmen = RahmenNamen &amp; RahmenAnzahl
+
+	&apos;Namen suchen, ob er bereits existiert	
+	Do Until Not ThisComponent.getTextFrames().hasByName(Rahmen)
+		RahmenAnzahl = RahmenAnzahl+1
+		Rahmen = RahmenNamen &amp; RahmenAnzahl
+	Loop
+
+	&apos;Rahmennamen zuweisen
+	&apos;oFrame.Name = Rahmen
+
+End Sub	
+	
+</script:module>

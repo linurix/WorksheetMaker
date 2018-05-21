@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="PDF_export" script:language="StarBasic">
+sub pdf_export
+	pdf_export_mit_Loesung()
+	pdf_export_ohne_Loesung()
+end sub
+
+
+
+sub pdf_export_mit_Loesung()
+
+	Dim pfad as String 
+	
+	LoesungEinblenden
+
+	pfad = thisComponent.getURL
+	pfad_laenge =  len(pfad)-4
+	pfad = left(pfad, pfad_laenge)
+	pfad = pfad+&quot; - L.pdf&quot;
+	
+	pdf_export_dispatcher(pfad)
+	
+end sub
+
+
+sub pdf_export_ohne_Loesung()
+	
+	Dim pfad as String 
+	
+	LoesungAusblenden
+	
+	pfad = thisComponent.getURL
+	pfad_laenge =  len(pfad)-4
+	pfad = left(pfad, pfad_laenge)
+	pfad = pfad+&quot;.pdf&quot;
+		
+	pdf_export_dispatcher(pfad)
+	
+end sub
+
+sub pdf_export_dispatcher(pfad as String)
+	dim document   as object
+	dim dispatcher as object
+
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	
+	If not globalScope.BasicLibraries.isLibraryLoaded(&quot;Tools&quot;) Then
+	      globalScope.BasicLibraries.loadLibrary(&quot;Tools&quot;)
+	End If
+	
+	dim args1(2) as new com.sun.star.beans.PropertyValue
+	args1(0).Name = &quot;URL&quot;
+	args1(0).Value = pfad
+	args1(1).Name = &quot;FilterName&quot;
+	args1(1).Value = &quot;writer_pdf_Export&quot;
+	args1(2).Name = &quot;FilterData&quot;
+	args1(2).Value = Array(Array(&quot;UseLosslessCompression&quot;,0,true,com.sun.star.beans.PropertyState.DIRECT_VALUE), Array(&quot;Quality&quot;,0,90,com.sun.star.beans.PropertyState.DIRECT_VALUE), Array(&quot;ReduceImageResolution&quot;,0,true,com.sun.star.beans.PropertyState.DIRECT_VALUE), Array(&quot;MaxImageResolution&quot;,0,300,com.sun.star.beans.PropertyState.DIRECT_VALUE))
+	dispatcher.executeDispatch(document, &quot;.uno:ExportToPDF&quot;, &quot;&quot;, 0, args1())
+	
+End Sub
+</script:module>

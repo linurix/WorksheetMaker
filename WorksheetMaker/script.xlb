@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
+<library:library xmlns:library="http://openoffice.org/2000/library" library:name="WorksheetMaker" library:readonly="false" library:passwordprotected="false">
+ <library:element library:name="Loesung_Ein_Aus"/>
+ <library:element library:name="Sonderzeichen"/>
+ <library:element library:name="Absatzvorlagen"/>
+ <library:element library:name="Zeichenvorlagen"/>
+ <library:element library:name="Rahmenvorlagen"/>
+ <library:element library:name="Seitenvorlagen"/>
+ <library:element library:name="Listenvorlagen"/>
+ <library:element library:name="Textbausteine"/>
+ <library:element library:name="Dokumentvorlagen"/>
+ <library:element library:name="Konstanten"/>
+ <library:element library:name="PDF_export"/>
+ <library:element library:name="Hilfe"/>
+ <library:element library:name="Gitternetz"/>
+ <library:element library:name="Bereiche"/>
+ <library:element library:name="Tools"/>
+ <library:element library:name="VorlagenDispatcher"/>
+ <library:element library:name="ToDos"/>
+ <library:element library:name="Zellenvorlagen"/>
+</library:library>

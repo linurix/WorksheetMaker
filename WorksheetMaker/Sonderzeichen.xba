@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Sonderzeichen" script:language="StarBasic">Sub SonderzeichenEinfuegen(Zeichen as String)
+	Dim doc as variant
+	Dim controller as variant
+	Dim textviewcursor as variant
+	doc = ThisComponent
+	controller = doc.getCurrentController()
+	textviewcursor = controller.getViewCursor()
+	Dim character as String
+	character = chr(clng(Zeichen))
+	textviewcursor.setString(character)
+	textviewcursor.goRight(1, false)
+End Sub
+
+&apos; Hochgestellte Zahlen
+Sub Hoch_0
+	SonderzeichenEinfuegen(&quot;&amp;HF80A&quot;)
+end Sub
+Sub Hoch_1
+	SonderzeichenEinfuegen(&quot;&amp;HF80B&quot;)
+end Sub
+Sub Hoch_2
+	SonderzeichenEinfuegen(&quot;&amp;HF80C&quot;)
+end Sub
+Sub Hoch_3
+	SonderzeichenEinfuegen(&quot;&amp;HF80D&quot;)
+end Sub
+Sub Hoch_4
+	SonderzeichenEinfuegen(&quot;&amp;HF80E&quot;)
+end Sub
+Sub Hoch_5
+	SonderzeichenEinfuegen(&quot;&amp;HF80F&quot;)
+end Sub
+Sub Hoch_6
+	SonderzeichenEinfuegen(&quot;&amp;HF810&quot;)
+end Sub
+Sub Hoch_7
+	SonderzeichenEinfuegen(&quot;&amp;HF811&quot;)
+end Sub
+Sub Hoch_8
+	SonderzeichenEinfuegen(&quot;&amp;HF812&quot;)
+end Sub
+Sub Hoch_9
+	SonderzeichenEinfuegen(&quot;&amp;HF813&quot;)
+end Sub
+Sub Hoch_Minus
+	SonderzeichenEinfuegen(&quot;&amp;H02C9&quot;)
+end Sub
+Sub Hoch_Mal
+	SonderzeichenEinfuegen(&quot;&amp;H02D9&quot;)
+end Sub
+
+&apos;Tiefgestellte Zahlen
+Sub Tief_0
+	SonderzeichenEinfuegen(&quot;&amp;HF814&quot;)
+end Sub
+Sub Tief_1
+	SonderzeichenEinfuegen(&quot;&amp;HF815&quot;)
+end Sub
+Sub Tief_2
+	SonderzeichenEinfuegen(&quot;&amp;HF816&quot;)
+end Sub
+Sub Tief_3
+	SonderzeichenEinfuegen(&quot;&amp;HF817&quot;)
+end Sub
+Sub Tief_4
+	SonderzeichenEinfuegen(&quot;&amp;HF818&quot;)
+end Sub
+Sub Tief_5
+	SonderzeichenEinfuegen(&quot;&amp;HF819&quot;)
+end Sub
+Sub Tief_6
+	SonderzeichenEinfuegen(&quot;&amp;HF81A&quot;)
+end Sub
+Sub Tief_7
+	SonderzeichenEinfuegen(&quot;&amp;HF81B&quot;)
+end Sub
+Sub Tief_8
+	SonderzeichenEinfuegen(&quot;&amp;HF81C&quot;)
+end Sub
+Sub Tief_9
+	SonderzeichenEinfuegen(&quot;&amp;HF81D&quot;)
+end Sub
+
+&apos;Operationszeichen
+Sub SonderzeichenEinfuegenMitLeerschlag(Zeichen as String)
+	Leerzeichen
+	SonderzeichenEinfuegen(Zeichen)
+	Leerzeichen
+end Sub
+
+Sub Mal
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H00B7&quot;)
+end Sub
+Sub Minus
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2212&quot;)
+end Sub
+Sub Geteilt
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H00F7&quot;)
+end Sub
+Sub Unendlich
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H221E&quot;)
+end Sub
+Sub Fast_Gleich
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2248&quot;)
+end Sub
+Sub Nicht_Gleich
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2260&quot;)
+end Sub
+Sub Kleiner_Gleich
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2264&quot;)
+end Sub
+Sub Groesser_Gleich
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2265&quot;)
+end Sub
+Sub Plusminus
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H00B1&quot;)
+end Sub
+
+&apos;Prozent
+Sub Prozent
+	Leerzeichen
+	SonderzeichenEinfuegen(&quot;&amp;H0025&quot;)
+end Sub
+Sub Promille
+	Leerzeichen
+	SonderzeichenEinfuegen(&quot;&amp;H2030&quot;)
+end Sub
+
+&apos;Geometrie
+Sub Durchmesser
+	SonderzeichenEinfuegen(&quot;&amp;H2300&quot;)
+end Sub
+Sub Winkel
+	SonderzeichenEinfuegen(&quot;&amp;H2221&quot;)
+end Sub
+Sub Winkel_Gerichtet
+	SonderzeichenEinfuegen(&quot;&amp;H2220&quot;)
+end Sub
+Sub Pi
+	SonderzeichenEinfuegen(&quot;&amp;H03C0&quot;)
+end Sub
+Sub Parallel
+	SonderzeichenEinfuegenMitLeerschlag(&quot;&amp;H2225&quot;)
+end Sub
+
+&apos;Weitere Sonderzeichen
+Sub Leerzeichen
+	SonderzeichenEinfuegen(&quot;&amp;H202F&quot;)
+end Sub
+Sub Haekchen
+	SonderzeichenEinfuegen(&quot;&amp;H2713&quot;)
+end Sub
+Sub Kaestchen_Leer
+	SonderzeichenEinfuegen(&quot;&amp;H2610&quot;)
+end Sub
+Sub Kaestchen_Haekchen
+	SonderzeichenEinfuegen(&quot;&amp;H2611&quot;)
+end Sub
+
+</script:module>

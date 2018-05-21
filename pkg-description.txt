@@ -1,0 +1,1 @@
+Worksheet Maker 1.1.0 - Copyright (c) 2014 Markus Schelbert. This extension is licensed under GPL (GNU General Public License)

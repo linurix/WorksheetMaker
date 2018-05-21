@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Gitternetz" dlg:left="81" dlg:top="137" dlg:width="110" dlg:height="93" dlg:closeable="true" dlg:moveable="true" dlg:title="Gitternetz erstellen">
+ <dlg:bulletinboard>
+  <dlg:button dlg:id="CommandButton1" dlg:tab-index="0" dlg:left="58" dlg:top="72" dlg:width="40" dlg:height="15" dlg:value="erstellen">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:WorksheetMaker.Gitternetz.GitternetzAusDialog?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:text dlg:id="Label1" dlg:tab-index="1" dlg:left="7" dlg:top="12" dlg:width="55" dlg:height="8" dlg:value="Gitternetzabstand:"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="3" dlg:left="7" dlg:top="27" dlg:width="55" dlg:height="8" dlg:value="Gitternetzbreite:"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="4" dlg:left="7" dlg:top="42" dlg:width="55" dlg:height="8" dlg:value="Gitternetzhöhe:"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="5" dlg:left="7" dlg:top="57" dlg:width="55" dlg:height="8" dlg:value="Textabstand:"/>
+  <dlg:button dlg:id="CommandButton2" dlg:tab-index="9" dlg:left="7" dlg:top="72" dlg:width="40" dlg:height="15" dlg:value="abbrechen">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:WorksheetMaker.Gitternetz.GitternetzDialogBeenden?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:textfield dlg:id="abstand" dlg:tab-index="2" dlg:left="63" dlg:top="10" dlg:width="20" dlg:height="12" dlg:value="5"/>
+  <dlg:textfield dlg:id="breite" dlg:tab-index="6" dlg:left="63" dlg:top="25" dlg:width="20" dlg:height="12" dlg:value="100"/>
+  <dlg:textfield dlg:id="hoehe" dlg:tab-index="7" dlg:left="63" dlg:top="40" dlg:width="20" dlg:height="12" dlg:value="50"/>
+  <dlg:textfield dlg:id="textabstand" dlg:tab-index="8" dlg:left="63" dlg:top="55" dlg:width="20" dlg:height="12" dlg:value="5"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="10" dlg:left="85" dlg:top="12" dlg:width="15" dlg:height="8" dlg:value="mm"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="11" dlg:left="85" dlg:top="27" dlg:width="15" dlg:height="8" dlg:value="mm"/>
+  <dlg:text dlg:id="Label7" dlg:tab-index="12" dlg:left="85" dlg:top="42" dlg:width="15" dlg:height="8" dlg:value="mm"/>
+  <dlg:text dlg:id="Label8" dlg:tab-index="13" dlg:left="85" dlg:top="57" dlg:width="15" dlg:height="8" dlg:value="mm"/>
+ </dlg:bulletinboard>
+</dlg:window>

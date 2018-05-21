@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Absatzvorlagen" script:language="StarBasic">&apos;+++ Absatzvorlagen zuweisen
+Sub button_Titel
+	AbsatzvorlageZuweisen(&quot;Titel&quot;)
+End Sub
+Sub button_ueberschrift1
+	AbsatzvorlageZuweisen(&quot;Überschrift 1&quot;)
+End Sub
+Sub button_ueberschrift2
+	AbsatzvorlageZuweisen(&quot;Überschrift 2&quot;)
+End Sub
+Sub button_ueberschrift3
+	AbsatzvorlageZuweisen(&quot;Überschrift 3&quot;)
+End Sub
+Sub button_Linien
+	AbsatzvorlageZuweisen(&quot;Linien&quot;)
+End Sub
+Sub button_Lueckentext
+	AbsatzvorlageZuweisen(&quot;Lückentext&quot;)
+End Sub
+Sub button_Aufgabe
+	AbsatzvorlageZuweisen(&quot;Aufgabe&quot;)
+End Sub
+Sub button_Quelle
+	AbsatzvorlageZuweisen(&quot;Quelle&quot;)
+End Sub
+Sub button_QuelleTitel
+	AbsatzvorlageZuweisen(&quot;QuelleTitel&quot;)
+End Sub
+Sub button_QuelleBeschriftung
+	AbsatzvorlageZuweisen(&quot;QuelleBeschriftung&quot;)
+End Sub
+Sub button_Textkoerper
+	AbsatzvorlageZuweisen(&quot;Textkörper&quot;)
+End Sub
+Sub button_Linien2Ebene
+	AbsatzvorlageZuweisen(&quot;Linien2Ebene&quot;)
+End Sub
+&apos;--- Absatzvorlagen zuweisen
+
+
+Sub AbsatzvorlageZuweisen(Absatzvorlage as String)    
+ 	ExistiertAbsatzvorlage(Absatzvorlage)
+ 	VorlagenDispatcher.VorlagenDispatcher(&quot;Absatzvorlage&quot;, Absatzvorlage)
+End Sub
+
+Sub ExistiertAbsatzvorlage(Absatzvorlage as String)
+	&apos;Prüft, ob eine Abastzvorlage exisitert und ruft wenn nötig die AbsatzvorlageErstellen() auf
+	If not ThisComponent.StyleFamilies.getByName(&quot;ParagraphStyles&quot;).hasByName(Absatzvorlage) then
+		AbsatzvorlageErstellen(Absatzvorlage)
+	End if
+End Sub
+
+Sub AbsatzvorlageErstellen(Absatzvorlage as String)
+
+	Dim oDoc, Rand as object
+	Dim border as new com.sun.star.table.BorderLine
+	Dim linespace as new com.sun.star.style.LineSpacing
+	Dim vParaStyles
+	Dim vStyleNeu 
+	
+	oParagraphStyles = ThisComponent.StyleFamilies.getByName(&quot;ParagraphStyles&quot;)
+	
+	&apos;Prüfen, ob die Vorlage schon existiert. Wenn ja, wir die Prozedur verlassen
+	If oParagraphStyles.hasByName(Absatzvorlage) then
+		Exit Sub
+	End if
+	
+	&apos;Meldung, dass eine neue Vorlage erstellt wird
+	msgbox &quot;Es wir nun eine Absatzvorlage mit dem Namen &apos;&quot; &amp; Absatzvorlage &amp; &quot;&apos; erstellt und kann selber angepasst werden.&quot;
+	
+	&apos;Neue Absatzvorlage erstellen	
+	vStyleNeu = ThisComponent.createInstance(&quot;com.sun.star.style.ParagraphStyle&quot;)
+	oParagraphStyles.insertByName(Absatzvorlage, vStyleNeu) 
+	
+	&apos;Neue Absatzvorlage formatieren
+	Select Case Absatzvorlage
+		
+ 		&apos;+++ Absatzvorlage: Linien
+		Case &quot;Linien&quot;	
+					
+   			with border
+       			.OuterLineWidth = 35
+   			end with
+  		
+  			with vStyleNeu
+       			.BottomBorder = border
+       			.ParaIsConnectBorder = false
+       			.ParentStyle = &quot;Text body&quot;
+   			end with
+   			
+   			&apos;Die Linien werden als Platzhalter für eine Lösung betrachtet. Deshalb wird die Zeichenvorlage Lösung gesetzt.
+   			ZeichenvorlageZuweisen(&quot;Lösung&quot;)
+ 		&apos;---
+ 		
+ 		&apos;+++ Absatzvorlage: Lückentext
+		Case &quot;Lückentext&quot;
+		
+			with linespace
+       			.Height = 150
+       			.Mode = PROP
+   			end with
+   			
+			With vStyleNeu
+				.ParaLineSpacing = linespace
+				.ParentStyle = &quot;Text body&quot;
+			End with
+		&apos;---
+			
+ 		&apos;+++ Absatzvorlage: Aufgabe
+		Case &quot;Aufgabe&quot;
+			
+			&apos;Überprüfen, ob die Listenvorlage schon existiert, weil der Nummerierungsstyl des Absatztes diese zugewiesen wird.
+			ExistiertListenvorlage(&quot;Aufgabe&quot;)
+			
+			With vStyleNeu
+				.ParentStyle = &quot;Text body&quot;	
+				.NumberingStyleName	= &quot;Aufgabe&quot;
+			End with
+		&apos;---
+		
+ 		&apos;+++ Absatzvorlage: Quelle
+		Case &quot;Quelle&quot;
+			with vStyleNeu  
+				.ParentStyle = &quot;Text body&quot;
+				.ParaIsHyphenation = true &apos;Silbentrennung
+				.ParaAdjust = 2 &apos; Blocksatz
+       			.CharHeight = 10
+   			end with
+   		&apos;---
+   		
+ 		&apos;+++ Absatzvorlage: QuelleTitel	
+		Case &quot;QuelleTitel&quot;
+		
+			&apos;Überprüft, ob die zukünfitge Eltern-Vorlage schon existiert
+			ExistiertAbsatzvorlage(&quot;Quelle&quot;)
+			
+			with vStyleNeu        			
+       			.ParentStyle = &quot;Quelle&quot;
+       			.CharWeight = 150 &apos; Fett
+       			.ParaAdjust = 0 &apos; Blocksatz
+   			end with
+		&apos;---
+		
+ 		&apos;+++ Absatzvorlage: QuelleBeschriftung	
+		Case &quot;QuelleBeschriftung&quot;
+
+			&apos;Überprüft, ob die zukünfitge Eltern-Vorlage schon existiert
+			ExistiertAbsatzvorlage(&quot;Quelle&quot;)
+
+  			with vStyleNeu	
+       			.ParentStyle = &quot;Quelle&quot;
+       			.CharPosture = com.sun.star.awt.FontSlant.ITALIC &apos;Kursiv
+       			.ParaAdjust = 0 &apos; Blocksatz
+   			end with
+   		&apos;---
+   		
+   		&apos;+++ Absatzvorlage: QuelleBeschriftung			
+		Case &quot;Linien2Ebene&quot;
+			ExistiertAbsatzvorlage(&quot;Linien&quot;)
+  			with vStyleNeu
+       			.ParentStyle = &quot;Linien&quot;
+       			.ParaLeftMargin = 1500
+   			end with
+   			
+   			&apos;Die Linien werden als Platzhalter für eine Lösung betrachtet. Deshalb wird die Zeichenvorlage Lösung gesetzt.
+   			ZeichenvorlageZuweisen(&quot;Lösung&quot;)
+		&apos;---
+		
+	End Select
+				
+End Sub
+</script:module>

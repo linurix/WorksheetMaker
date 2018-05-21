@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Loesung_Ein_Aus" script:language="StarBasic">REM +++ Lösung Ein/Aus
+Sub LoesungEinblenden()
+
+	if thisComponent.supportsService (&quot;com.sun.star.text.GenericTextDocument&quot;) then
+		set_CharacterStyle(&quot;Lösung&quot;,GRUEN, 0)
+		set_CharacterStyle(&quot;LösungAufgabe&quot;,GRUEN, 0)
+		set_FrameStylesLoesung(True)
+		set_FrameStylesAufgabe(False)
+		set_CharacterStyle(&quot;Markiert&quot;,0, True)
+	End If
+	
+	
+	if thisComponent.supportsService (&quot;com.sun.star.sheet.SpreadsheetDocument&quot;) then
+		CellLoesungEin()
+	End If
+	
+End Sub
+
+Sub LoesungAusblenden()
+
+	if thisComponent.supportsService (&quot;com.sun.star.text.GenericTextDocument&quot;) then
+		set_CharacterStyle(&quot;Lösung&quot;,WEISS, 0)
+		set_CharacterStyle(&quot;LösungAufgabe&quot;,SCHWARZ, 0)
+		set_FrameStylesLoesung(False)
+		set_FrameStylesAufgabe(True)
+		set_CharacterStyle(&quot;Markiert&quot;,0, False)
+	End If
+	
+	if thisComponent.supportsService (&quot;com.sun.star.sheet.SpreadsheetDocument&quot;) then
+		CellLoesungAus()
+	End If
+	
+End Sub
+REM --- Lösung Ein/Aus
+
+</script:module>

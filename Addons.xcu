@@ -1,0 +1,799 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<oor:component-data 
+ xmlns:oor="http://openoffice.org/2001/registry"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ oor:name="Addons"
+ oor:package="org.openoffice.Office">
+	<node oor:name="AddonUI">
+		<node oor:name="OfficeToolBar">
+			<node oor:name="Generate.OfficeToolBar.m1" oor:op="replace">
+				<!-- 00 Dokumentvorlagen -->
+				<!-- 01 Allgemeine Vorlage-->
+				<node oor:name="00_vorlagen00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Dokumentvorlagen.NeuesArbeitsblatt?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/dokumentvorlagen/vorlage</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Neue Vorlage</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>			
+			
+
+				<!-- 10 Lösung ein aus -->
+				<!-- 11 Lösung ein -->
+				<node oor:name="01_druck00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<node oor:name="01_druck01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Loesung_Ein_Aus.LoesungEinblenden?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/loesung-ein</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösungen einblenden</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>				
+				<!-- 02 Lösung aus -->
+				<node oor:name="01_druck02" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Loesung_Ein_Aus.LoesungAusblenden?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/loesung-aus</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösungen ausblenden</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 03 PDF Druck -->
+				<node oor:name="01_druck03" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.PDF_export.pdf_export?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/pdf-druck</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Aufgaben- und Lösungsblatt als PDF speichern</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 04 PDF Druck ohne Lösung-->
+				<node oor:name="01_druck04" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.PDF_export.pdf_export_ohne_Loesung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/pdf-druck-ohne-loesung</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Als PDF speichern</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<!-- 10 Absatzvorlagen -->
+				<node oor:name="02_absatz00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<!-- 11 Titel-->
+				<node oor:name="02_absatz01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Titel?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/titel</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Titel</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="02_absatz03" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_ueberschrift1?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/ueberschrift1</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Überschrift 1</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<node oor:name="02_absatz04" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_ueberschrift2?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/ueberschrift2</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Überschrift 2</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<node oor:name="02_absatz05" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_ueberschrift3?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/ueberschrift3</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Überschrift 3</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+
+				
+				<!-- Textkörper-->
+				<node oor:name="02_absatz11" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Textkoerper?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/textkoerper</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Textkörper</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<!-- Linien -->
+				<node oor:name="02_absatz12" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Linien?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/linien</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Linien</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 13 Linien Eingerückt-->
+				<node oor:name="02_absatz13" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Linien2Ebene?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/linien2ebene</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Linien eingerückt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 14 Lückentext -->
+				<node oor:name="02_absatz14" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Lueckentext?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/lueckentext</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lückentext</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 15 Aufgabe -->
+				<node oor:name="02_absatz15" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Aufgabe?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/aufgabe</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Aufgabe</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 20 Quelle Titel-->
+				<node oor:name="02_absatz50" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<node oor:name="02_absatz51" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_QuelleTitel?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/quelle-titel</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Quellentitel</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 21 Quelle -->
+				<node oor:name="02_absatz61" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_Quelle?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/quelle</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Quellentext</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 22 Quelle Beschriftung -->
+				<node oor:name="02_absatz71" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Absatzvorlagen.button_QuelleBeschriftung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/absatzvorlagen/quellebeschriftung</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Quellenbeschriftung</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 30 Zeichenvorlagen -->
+				<node oor:name="03_zeichen00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<!-- 31 Standard -->
+				<node oor:name="03_zeichen01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Zeichenvorlagen.button_Standard?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/zeichenvorlagen/Standard</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Standard</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 32 Lösung -->
+				<node oor:name="03_zeichen02" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Zeichenvorlagen.button_Loesung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/zeichenvorlagen/Loesung</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösung</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 33 Lücke -->
+				<node oor:name="03_zeichen03" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Zeichenvorlagen.button_Luecke?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/zeichenvorlagen/luecke</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lücke</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 34 Markieren -->
+				<node oor:name="03_zeichen04" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Zeichenvorlagen.button_Markiert?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/zeichenvorlagen/markiert</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Markiert</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 50 Rahmenvorlagen -->
+				<node oor:name="04_rahmen00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				
+				<node oor:name="04_rahmen01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_bild_a?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/bild-a</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Bild nur auf Aufgabenblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen02" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_bild?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/bild</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Bild</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen03" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_bild_l?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/bild-l</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Bild nur auf Lösungsblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<node oor:name="04_rahmen10" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_formel_a?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/formel-a</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Formel nur auf Aufgabenblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen11" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_formel?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/formel</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Formel</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen12" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_formel_l?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/formel-l</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Formel nur auf Lösungsblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+								
+				<node oor:name="04_rahmen30" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_rahmen_a?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/rahmen-a</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Rahmen nur auf Aufgabenblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen31" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_rahmen?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/rahmen</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Rahmen</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="04_rahmen32" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_rahmen_l?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/rahmen-l</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Rahmen nur auf Lösungsblatt</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				
+				
+				<!-- 70 Seitenvorlagen -->
+				
+				<!-- 90 Listenvorlagen -->
+				<node oor:name="06_listen00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<node oor:name="06_listen01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Listenvorlagen.multiplechoice?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/listenvorlagen/viereck</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Multiple Choice</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="06_listen02" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Listenvorlagen.multiplechoiceloesung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/listenvorlagen/viereck-l</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Multiple Choice mit Lösungsmarkierung</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				<!-- Gitternetz -->
+				<node oor:name="07_gitternetz00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<node oor:name="07_gitternetz01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Rahmenvorlagen.button_haeschen?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/rahmenvorlagen/haeuschen</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Gitternetz einfügen</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				
+				
+				<!-- Excel -->
+								<!-- 10 Lösung ein aus -->
+				<!-- 11 Lösung ein -->
+				<node oor:name="E01_druck00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>private:separator</value>
+					</prop>
+				</node>
+				<node oor:name="E01_druck01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Loesung_Ein_Aus.LoesungEinblenden?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/loesung-ein</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösungen einblenden</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>				
+				<!-- 02 Lösung aus -->
+				<node oor:name="E01_druck02" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Loesung_Ein_Aus.LoesungAusblenden?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/loesung-aus</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösungen ausblenden</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 03 PDF Druck -->
+				<node oor:name="E01_druck03" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.PDF_export.pdf_export?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/pdf-druck</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Aufgaben- und Lösungsblatt als PDF speichern</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<!-- 04 PDF Druck ohne Lösung-->
+				<node oor:name="E01_druck04" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.PDF_export.pdf_export_ohne_Loesung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/druck/pdf-druck-ohne-loesung</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Als PDF speichern</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>
+				<node oor:name="E01_Cell00" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+				</node>
+				<node oor:name="E01_Cell01" oor:op="replace">
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.sheet.SpreadsheetDocument</value>
+					</prop>
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>vnd.sun.star.script:WorksheetMaker.Zellenvorlagen.button_Loesung?language=Basic&amp;location=application</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value>%origin%/icons/zeichenvorlagen/Loesung</value>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value>Lösung</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+				</node>		
+			</node>
+		</node>
+		<!-- Menu Hilfe-->
+		<node oor:name="OfficeHelp">
+			<node oor:name="Generate.OfficeHelp.m1" oor:op="replace">
+				<prop oor:name="Context" oor:type="xs:string">
+					<value>com.sun.star.text.TextDocument</value>
+				</prop>
+				<prop oor:name="URL" oor:type="xs:string">
+					<value>macro:///WorksheetMaker.Hilfe.wwwHilfe</value>
+				</prop>
+				<prop oor:name="ImageIdentifier" oor:type="xs:string">
+					<value>%origin%/icons/hilfe/linurix</value>
+				</prop>
+				<prop oor:name="Title" oor:type="xs:string">
+					<value>Worksheet Maker</value>
+				</prop>
+				<prop oor:name="Target" oor:type="xs:string">
+					<value>_self</value>
+				</prop>
+			</node>
+		</node>
+	</node>
+</oor:component-data>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ToDos" script:language="StarBasic">&apos;- Sub QuadratLoesung()
+&apos;	&apos;
+&apos;	Dim oFrame, oCursor
+&apos;	
+&apos;	&apos;Rahmen erstellen
+&apos;	oFrame = ThisComponent.createInstance( &quot;com.sun.star.text.TextFrame&quot;)
+	
+&apos;	&apos;Formatvorlage RahmenLösung zuweisen
+&apos;	ExistiertRahmenvorlage(&quot;RahmenLösung&quot;)
+&apos;	oFrame.FrameStyleName = &quot;RahmenLösung&quot;
+&apos;	
+&apos;	&apos;Rahmen in Text einfügen
+&apos;	oCursor = ThisComponent.CurrentController.getViewCursor()
+&apos;	oCursor.gotoRange(oCursor.getEnd(), False)
+&apos;	ThisComponent.Text.insertTextContent(oCursor, oFrame, false)
+
+&apos;	Erstellung des Lösungsquadrätchen schlägt in einer Tabelle fehl.
+</script:module>

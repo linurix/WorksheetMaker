@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Hilfe" script:language="StarBasic">
+Private Declare Function ShellExecute Lib &quot;Shell32.dll&quot; Alias _
+    &quot;ShellExecuteA&quot; (ByVal hWnd As Long, ByVal lpOperation _
+    As String, ByVal lpFile As String, ByVal lpParameters _
+    As String, ByVal lpDirectory As String, ByVal nShowCmd _
+    As Long) As Long
+
+Private Sub wwwHilfe()
+	Dim Result&amp;, Buff$
+	Buff = &quot;http://www.linurix.ch/WorksheetMaker/&quot;
+	Result = ShellExecute(0&amp;, &quot;Open&quot;, Buff, &quot;&quot;, &quot;&quot;, 1)
+End Sub
+</script:module>

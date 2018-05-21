@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="VorlagenDispatcher" script:language="StarBasic">option explicit
+
+Sub VorlagenDispatcher(Typ as String, VorlageName as String)
+
+	Dim VorlagenTypVergleich as String
+	Dim VorlagenTyp as Integer
+	
+	Dim Document   as Object
+	Dim Dispatcher as Object
+
+	Document   = ThisComponent.CurrentController.Frame
+	Dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	
+	
+	&apos;Alle Möglichkeiten müssen in kleinbuchstaben notiert werden
+	VorlagenTypVergleich = LCase(Typ)
+	
+	Select Case VorlagenTypVergleich
+	
+		Case &quot;zeichenvorlage&quot;, &quot;zeichen&quot;, &quot;charstyle&quot;, &quot;cahr&quot;
+			VorlagenTyp = 1
+			
+		Case &quot;absatzvorlage&quot;, &quot;absatz&quot;, &quot;paragraphstyle&quot;, &quot;paragraph&quot;
+			VorlagenTyp = 2
+			
+		Case &quot;rahmenvorlage&quot;, &quot;rahmen&quot;, &quot;framestyle&quot;, &quot;frame&quot;
+			VorlagenTyp = 4
+			
+		Case &quot;seitenvorlage&quot;, &quot;seite&quot;, &quot;pagestyle&quot;, &quot;page&quot;
+			VorlagenTyp = 8
+			
+		Case &quot;listenvorlage&quot;, &quot;liste&quot;, &quot;numberingstyle&quot;, &quot;numbering&quot;
+			VorlagenTyp = 16
+		
+		Case &quot;zellenvorlage&quot;
+			VorlagenTyp = 2
+			
+		Case Else
+			MsgBox &quot;Der Vorlagentyp &quot;&quot;&quot; &amp; Typ &amp; &quot;&quot;&quot; ist unbekannt und kann daher nicht zugewiesen werden.&quot; 
+			Exit Sub
+			
+	End Select
+	
+	dim Argumente(1) as new com.sun.star.beans.PropertyValue
+	Argumente(0).Name = &quot;Template&quot;
+	Argumente(0).Value = VorlageName
+	Argumente(1).Name = &quot;Family&quot;
+	Argumente(1).Value = VorlagenTyp
+
+	dispatcher.executeDispatch(document, &quot;.uno:StyleApply&quot;, &quot;&quot;, 0, Argumente())
+	
+End Sub
+
+Sub VorlagenTest()
+	VorlagenDispatcher(&quot;Zeichenvorlage&quot;, &quot;Zitat&quot;)
+End Sub
+
+</script:module>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Konstanten" script:language="StarBasic">PUBLIC CONST GRUEN		= 32768 	&apos; RGB(0,128,0)
+PUBLIC CONST WEISS		= 16777215 	&apos; RGB(255,255,255)
+PUBLIC CONST SCHWARZ	= 0 		&apos; RGB(0,0,0)
+PUBLIC CONST GELB		= 16765728	&apos; RGB(255,211,32)
+
+
+sub test()
+	msgbox RGB(255,211,32)
+end sub
+
+sub msgEntwicklung()
+	msgbox &quot;Diese Funktion ist noch in Entwicklung und ist in dieser Version noch nicht umgesetzt worden. Bitte führen Sie ein Update durch, eventuell existier eine neuere Version, in der die Funktion umgesetzt ist.&quot; &amp; chr(10) &amp; chr(10) &amp; &quot;Menu -&gt; Extras -&gt; Extension Manager -&gt; Auf Updates prüfen.&quot;   &amp; chr(10) &apos; , MB_YESNOCANCEL + MB_DEFBUTTON3 + MB_ICONQUESTION, 
+end sub
+</script:module>

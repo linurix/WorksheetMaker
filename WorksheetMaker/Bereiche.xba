@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Bereiche" script:language="StarBasic">Sub QuellenBereichEinfuegen()
+    oCols = ThisComponent.createInstance(&quot;com.sun.star.text.TextColumns&quot;)
+    oCols.setColumnCount(2)
+    oSect = ThisComponent.getCurrentController().getViewCursor()
+    
+	oSect.SetPropertyValue(&quot;TextColumns&quot;,oCols)
+    oSect.TextColumns = oCols
+    
+    
+    
+    Dim MijnDocument As Object, MijnTekst As Object
+Dim MijnCursor  As Object
+Dim MijnKader As Object
+DIM MijnKolommen as object  &apos;--the columns
+Dim MijnSequence as new com.sun.star.text.TextColumn  &apos;--Struct to hold width and margins
+MijnDocument = ThisComponent
+MijnTekst = MijnDocument.Text
+MijnCursor= MijnTekst.createTextCursor
+MijnKader = MijnDocument.createInstance(&quot;com.sun.star.text.TextFrame&quot;)
+With MijnKader
+  .Width = 10000
+  .Height = 8000
+  .SizeType = com.sun.star.text.SizeType.FIX
+  .AnchorType = com.sun.star.text.TextContentAnchorType.AT_PAGE
+  .VertOrient = com.sun.star.text.VertOrientation.CENTER
+  .VertOrientRelation = com.sun.star.text.RelOrientation.PAGE_FRAME
+  .HoriOrient = com.sun.star.text.HoriOrientation.RIGHT
+  .HoriOrientRelation = com.sun.star.text.RelOrientation.PAGE_LEFT
+End With
+MijnTekst.insertTextContent( MijnCursor, MijnKader, false)
+MijnKader.Text.String = &quot;X&quot;
+
+MijnKolommen = MijnKader.TextColumns
+MijnKolommen.Isautomatic()
+MijnKolommen.SetColumnCount(2)
+&apos;--MijnKolommen.AutomaticDistance(400) --&apos;do not works must go over SetPropertyValue ???
+MijnKolommen.SetPropertyValue(&quot;AutomaticDistance&quot;,400)
+MijnKader.SetPropertyValue(&quot;TextColumns&quot;,Mijnkolommen)
+
+
+End Sub
+
+
+sub test
+rem ----------------------------------------------------------------------
+rem define variables
+dim document   as object
+dim dispatcher as object
+rem ----------------------------------------------------------------------
+rem get access to the document
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+
+rem ----------------------------------------------------------------------
+dim args1(7) as new com.sun.star.beans.PropertyValue
+args1(0).Name = &quot;Columns&quot;
+args1(0).Value = 2
+args1(1).Name = &quot;RegionName&quot;
+args1(1).Value = &quot;Bereich1&quot;
+args1(2).Name = &quot;RegionCondition&quot;
+args1(2).Value = &quot;&quot;
+args1(3).Name = &quot;RegionHidden&quot;
+args1(3).Value = false
+args1(4).Name = &quot;RegionProtect&quot;
+args1(4).Value = false
+args1(5).Name = &quot;LinkName&quot;
+args1(5).Value = &quot;&quot;
+args1(6).Name = &quot;FilterName&quot;
+args1(6).Value = &quot;&quot;
+args1(7).Name = &quot;SubRegion&quot;
+args1(7).Value = &quot;&quot;
+
+dispatcher.executeDispatch(document, &quot;.uno:InsertSection&quot;, &quot;&quot;, 0, args1())
+
+
+end sub
+</script:module>

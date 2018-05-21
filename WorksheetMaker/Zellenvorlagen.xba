@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Zellenvorlagen" script:language="StarBasic">Sub button_Loesung
+	ZellennvorlageZuweisen(&quot;Lösung&quot;)
+End Sub
+
+Sub ZellennvorlageZuweisen(Zeichenvorlage as String)
+ 	ExistiertZellenvorlage(Zeichenvorlage)
+ 	VorlagenDispatcher.VorlagenDispatcher(&quot;zellenvorlage&quot;, Zeichenvorlage)
+End Sub
+
+Sub ExistiertZellenvorlage(Zeichenvorlage as String)
+	if not ThisComponent.StyleFamilies.getByName(&quot;CellStyles&quot;).hasByName(Zeichenvorlage) then
+		ZellenvorlageErstellen(Zeichenvorlage)
+	end if	
+End Sub
+
+
+Sub ZellenvorlageErstellen(Zeichenvorlage as String)
+
+	Dim oDoc, Rand as object
+	Dim vCellStyles
+	Dim vStyleNeu 
+	
+	msgbox &quot;Zuerst eine Zellvorlage mit dem Namen &apos;&quot; &amp; Zeichenvorlage &amp; &quot;&apos; erstellen. Diese wird nun automatisch erstellt und kann manuell angepasst werden&quot;
+
+	oDoc = ThisComponent
+	vCellStyles = oDoc.StyleFamilies.getByName(&quot;CellStyles&quot;)
+    
+	If Not vCellStyles.hasByName(Zeichenvorlage) then
+	
+		vStyleNeu = oDoc.createInstance(&quot;com.sun.star.style.CellStyle&quot;)
+		vCellStyles.insertByName(Zeichenvorlage, vStyleNeu) 	
+	
+		myStyle = vCellStyles.getByName(Zeichenvorlage)
+	
+		Select Case Zeichenvorlage
+			
+			Case &quot;Lösung&quot;
+   				with myStyle
+       				.CharColor = GRUEN	
+   				end with
+   				
+		End Select
+	EndIf				
+End Sub
+
+
+
+Sub	set_CellStyle(Style as String, Farbe as String, Drucken as Boolean)
+	Dim oDoc
+	oDoc = ThisComponent
+	oStyles = oDoc.StyleFamilies
+	oCellStyles = oStyles.getByName(&quot;CellStyles&quot;)
+	
+	If oCellStyles.hasByName(Style) then
+		myStyle = oCellStyles.getByName(Style)&apos;Name anpassen
+		myStyle.CharColor = Farbe
+	EndIf
+
+End Sub
+
+Sub CellLoesungEin()
+	set_CellStyle(&quot;Lösung&quot;,GRUEN, 0)
+End Sub
+
+Sub CellLoesungAus()
+	set_CellStyle(&quot;Lösung&quot;,WEISS, 1)
+End Sub
+</script:module>

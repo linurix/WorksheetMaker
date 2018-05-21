@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Dokumentvorlagen" script:language="StarBasic">REM neue Arbeitsblatt aus dem Web herunterladen
+Sub NeuesArbeitsblatt()
+	sFile = &quot;http://www.linurix.ch/WorksheetMaker/Downloads/Arbeitsblatt.odt&quot; &apos; Windows
+	sURL = ConvertToURL(sFile)
+	oDoc = StarDesktop.loadComponentFromURL(sURL, &quot;_blank&quot;, 0, Array())
+End Sub
+</script:module>

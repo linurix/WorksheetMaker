@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Rahmenvorlagen" script:language="StarBasic">Dim oGraph
+Dim oFrame
+Dim oMath
+
+
+Sub button_bild_a
+	RahmenvorlageZuweisen(&quot;GrafikAufgabe&quot;)
+End Sub
+
+Sub button_bild
+	RahmenvorlageZuweisen(&quot;GrafikBeide&quot;)
+End Sub
+
+Sub button_bild_l
+	RahmenvorlageZuweisen(&quot;GrafikLösung&quot;)
+End Sub
+
+Sub button_formel_a
+	RahmenvorlageZuweisen(&quot;FormelAufgabe&quot;)
+End Sub
+
+Sub button_formel
+	RahmenvorlageZuweisen(&quot;FormelBeide&quot;)
+End Sub
+
+Sub button_formel_l
+	RahmenvorlageZuweisen(&quot;FormelLösung&quot;)
+End Sub
+
+Sub button_haeschen
+	GitternetzDialogAufrufen()
+End Sub
+
+Sub button_rahmen_a
+	RahmenvorlageZuweisen(&quot;RahmenAufgabe&quot;)
+End Sub
+
+Sub button_rahmen
+	RahmenvorlageZuweisen(&quot;RahmenBeide&quot;)
+End Sub
+
+Sub button_rahmen_l
+	RahmenvorlageZuweisen(&quot;RahmenLösung&quot;)
+End Sub
+
+REM +++ Frames
+Sub set_FrameStylesLoesung(Drucken as Boolean)
+	set_FrameStyle(&quot;FormelLösung&quot;, Drucken)
+	set_FrameStyle(&quot;GrafikLösung&quot;, Drucken)
+	set_FrameStyle(&quot;RahmenLösung&quot;, Drucken)
+End Sub
+
+Sub set_FrameStylesAufgabe(Drucken as Boolean)
+	set_FrameStyle(&quot;FormelAufgabe&quot;, Drucken)
+	set_FrameStyle(&quot;GrafikAufgabe&quot;, Drucken)
+	set_FrameStyle(&quot;RahmenAufgabe&quot;, Drucken)
+End Sub
+
+Sub set_FrameStyle(Framename as String, Drucken as Boolean)
+
+	oFrameStyles = ThisComponent.StyleFamilies.getByName(&quot;FrameStyles&quot;)
+	
+	&apos;Überprüfen ob Framestyle existiert
+	if oFrameStyles.hasByName(Framename) then
+		
+		&apos;Framstyle auswählen
+		myStyleLosung = oFrameStyles.getByName(Framename)
+		
+		&apos;Druckmodus anpassen
+		if(Drucken) then
+			myStyleLosung.Print = true
+		else
+			myStyleLosung.Print = false
+		end if
+		
+	end if
+	
+End Sub
+
+Sub ExistiertRahmenvorlage(Rahmenvorlage as String)
+	if not  ThisComponent.StyleFamilies.getByName(&quot;FrameStyles&quot;).hasByName(Rahmenvorlage) then
+		RahmenvorlageErstellen(Rahmenvorlage)
+	end if	
+End Sub
+
+Sub RahmenvorlageErstellen(Rahmenvorlage as String)
+
+	Dim oDoc, Rand as object
+	Dim border as new com.sun.star.table.BorderLine
+	Dim vCharStyles
+	Dim vStyleNeu 
+	
+	msgbox &quot;Zuerst eine Rahmenvorlage mit dem Namen &apos;&quot; &amp; Rahmenvorlage &amp; &quot;&apos; erstellen. Diese wird nun automatisch erstellt und kann manuell angepasst werden&quot;
+
+	vFrameStyles = ThisComponent.StyleFamilies.getByName(&quot;FrameStyles&quot;)
+    
+	&apos;Wenn die Rahmenvorlage noch nicht existiert ...    
+	If Not vFrameStyles.hasByName(Rahmenvorlage) then
+	
+		&apos;... wird eine neue Rahmenvorlage angelegt
+		vStyleNeu = ThisComponent.createInstance(&quot;com.sun.star.style.FrameStyle&quot;)
+		vFrameStyles.insertByName(Rahmenvorlage, vStyleNeu) 	
+	
+		&apos;+++ Rahmenvorlage anpassen
+		myStyle = vFrameStyles.getByName(Rahmenvorlage)
+		
+		Select Case Rahmenvorlage
+			
+			Case &quot;GrafikAufgabe&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Graphics&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   				
+   			Case &quot;GrafikBeide&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Graphics&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   				
+   			Case &quot;GrafikLösung&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Graphics&quot;
+       				.Surround = 1
+       				.TextWrap = 1
+       				.Print = false
+					.HoriOrient = 3
+					.HoriOrientRelation = 1
+					.VertOrientRelation = 1 
+					.AnchorPageNo = 2
+   				end with
+   				
+   			Case &quot;FormelAufgabe&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Formula&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   			
+   			Case &quot;FormelBeide&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Formula&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   				
+   			Case &quot;FormelLösung&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Formula&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   		
+   			Case &quot;RahmenAufgabe&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Frame&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   				
+   			Case &quot;RahmenBeide&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Frame&quot;
+       				.Surround = 0
+       				.TextWrap = 0
+   				end with
+   			
+   			Case &quot;RahmenLösung&quot;
+   				with myStyle
+       				.ParentStyle = &quot;Frame&quot;
+       				.Surround = 1
+       				.TextWrap = 1
+       				.Print = false
+					.HoriOrient = 3
+					.HoriOrientRelation = 1
+					.VertOrientRelation = 1 
+					.AnchorPageNo = 2
+   				end with
+   				
+		End Select
+		
+		&apos;--- Rahmenvorlagen anpassen
+		
+	EndIf
+End Sub
+
+
+Sub RahmenvorlageZuweisen(Rahmenvorlage as String)
+
+	&apos;Überprüfen, ob die Rahmenvorlage existiert
+	ExistiertRahmenvorlage(Rahmenvorlage)
+	
+	&apos;Anker setzen
+	oDoc = ThisComponent
+	oViewC = oDoc.getCurrentController().getViewCursor()
+	
+	&apos; Wenn kein Frame (Bild, Formel, Rahmen) ausgewählt ist, dann spezifisches Frame einfügen 
+	If isEmpty(oViewC.textFrame) then
+	
+		Select Case Rahmenvorlage
+		
+			Case &quot;GrafikAufgabe&quot;
+   				bild_einfuegen()
+   				oframe = oGraph
+   		
+   			Case &quot;GrafikBeide&quot;
+   				bild_einfuegen()
+   				oframe = oGraph
+   		
+   			Case &quot;GrafikLösung&quot;
+   				bild_einfuegen()
+   				oframe = oGraph
+   			
+   			Case &quot;FormelAufgabe&quot;
+   				formel_einfuegen(&quot;Aufgabe&quot;)
+   				oframe = oMath
+   				
+   			Case &quot;FormelBeide&quot;
+   				formel_einfuegen(&quot;Beide&quot;)
+   				oframe = oMath
+   				
+			Case &quot;FormelLösung&quot;
+   				formel_einfuegen(&quot;Lösung&quot;)
+   				oframe = oMath
+   				
+  	 		Case &quot;RahmenAufgabe&quot;
+	   			rahmen_einfuegen(&quot;Aufgabe&quot;)
+	   		
+	   		Case &quot;RahmenBeide&quot;
+	   			rahmen_einfuegen(&quot;Beide&quot;)
+	   			
+  	 		Case &quot;RahmenLösung&quot;
+				rahmen_einfuegen(&quot;Lösung&quot;)
+				
+		End Select
+		
+	else
+	
+		&apos;Falls ein Frame selektiert ist, dieses setzten
+		oFrame = oViewC.textFrame
+	
+	End If
+	
+	&apos;Fehler abfangen, falls während des Einfügens von einem Bild auf Abbrechen geklickt wurde.
+	If isEmpty(oFrame) then	
+		MsgBox &quot;Es wurde keine Bild, Formel oder Rahmen ausgewählt.&quot;
+		Exit Sub
+	End If
+			
+    &apos;Je nach Frame entscheiden, ob die Rahmenvolage zugewiesen werden kann, oder ob ein neues
+    &apos;Frame des anderen Typs (Rahmen, Bild, Formel) eingefügt werden soll.   
+    Select Case Rahmenvorlage
+    
+    	&apos;Falls Bild existiert, Rahmenvorlage anpassen oder neues Bild einfügen
+		Case &quot;GrafikAufgabe&quot;
+			If oFrame.FrameStyleName = &quot;GrafikAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Graphics&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			bild_einfuegen()
+   				oframe = oGraph
+		   	End if		
+		   	
+		&apos;Falls Bild existiert, Rahmenvorlage anpassen oder neues Bild einfügen
+		Case &quot;GrafikBeide&quot;
+			If oFrame.FrameStyleName = &quot;GrafikAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Graphics&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			bild_einfuegen()
+   				oframe = oGraph
+		   	End if
+		   	
+		&apos;Falls Bild existiert, Rahmenvorlage anpassen oder neues Bild einfügen
+		Case &quot;GrafikLösung&quot;
+			If oFrame.FrameStyleName = &quot;GrafikAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;GrafikLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Graphics&quot; then
+	   			
+	   			oFrame.AnchorType = 0 &apos; Am Absatz
+   				oFrame.AnchorPageNo=1  
+
+				oFrame.VertOrientRelation = 1   
+				oFrame.VertOrientPosition = 0   
+
+				oFrame.HoriOrient=3  
+				oFrame.HoriOrientRelation=1  
+				oFrame.HoriOrientPosition = 0 
+   			Else		
+	   			bild_einfuegen()
+   				oframe = oGraph
+		   	End if		
+ 		
+		&apos;Falls Formel existiert, Rahmenvorlage anpassen und sonst neue Formel einfügen
+		Case &quot;FormelAufgabe&quot;
+			If oFrame.FrameStyleName = &quot;FormelAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Formula&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			formel_einfuegen(&quot;Aufgabe&quot;)
+   				oframe = oMath
+		   	End if
+		   	
+		Case &quot;FormelBeide&quot;
+			If oFrame.FrameStyleName = &quot;FormelAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Formula&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			formel_einfuegen(&quot;Beide&quot;)
+   				oframe = oMath
+		   	End if
+		   	
+		Case &quot;FormelLösung&quot;
+			If oFrame.FrameStyleName = &quot;FormelAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;FormelLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Formula&quot; then
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			formel_einfuegen(&quot;Lösung&quot;)
+   				oframe = oMath
+		   	End if	
+		   	   	
+		
+		Case &quot;RahmenAufgabe&quot;
+			If oFrame.FrameStyleName = &quot;RahmenAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Frame&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			rahmen_einfuegen(&quot;Aufgabe&quot;)
+		   	End if	
+		   	   	
+		Case &quot;RahmenBeide&quot;
+			If oFrame.FrameStyleName = &quot;RahmenAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Frame&quot; then
+	   			
+	   			oFrame.AnchorType = 1 &apos;Als Text
+   			Else		
+	   			rahmen_einfuegen(&quot;Beide&quot;)
+		   	End if	
+		   	
+		Case &quot;RahmenLösung&quot;
+			If oFrame.FrameStyleName = &quot;RahmenAufgabe&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenBeide&quot; OR _
+	   			oFrame.FrameStyleName = &quot;RahmenLösung&quot; OR _
+	   			oFrame.FrameStyleName = &quot;Frame&quot; then
+	   			
+	   			oFrame.AnchorType = 0 &apos; Am Absatz
+	   			oFrame.AnchorPageNo=1  
+	
+				oFrame.VertOrientRelation = 1   
+				oFrame.VertOrientPosition = 0   
+	
+				oFrame.HoriOrient=3  
+				oFrame.HoriOrientRelation=1  
+				oFrame.HoriOrientPosition = 0
+   			Else		
+	   			rahmen_einfuegen(&quot;Lösung&quot;)
+		   	End if	
+   		
+   	End Select
+   	
+   	&apos;Rahmenvorlage des aktuellen Frames zuweisen
+	oFrame.FrameStyleName = Rahmenvorlage
+	
+End Sub
+
+Sub rahmen_einfuegen(modus as string)
+
+	&apos;Wenn nötig Selectierte Grafiken, Zeichenobjekte ... deselektieren
+	dim document   as object
+	dim dispatcher as object
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	dispatcher.executeDispatch(document, &quot;.uno:Escape&quot;, &quot;&quot;, 0, Array())
+
+	&apos;Rahmen erstellen und einfügen
+	oFrame = ThisComponent.createInstance( &quot;com.sun.star.text.TextFrame&quot; )
+	oFrame.Width = 6000	&apos;Kann angepasst werden
+	oFrame.FrameStyleName = &quot;Frame&quot;
+	
+	&apos;Rahmen in Dokument einfügen
+	oCursor = ThisComponent.CurrentController.getViewCursor
+	If NOT isEmpty(oCursor.TextTable) Then
+		oCursor.Cell.insertTextContent(oCursor,oFrame,False)
+	ElseIf NOT isEmpty(oCursor.TextFrame) Then
+		oCursor.TextFrame.insertTextContent(oCursor,oFrame,False)
+	Else
+		ThisComponent.Text.insertTextContent(oCursor,oFrame,False)
+	End If
+	
+	&apos;Bei Rahmen mit Lösungsinhalt überprüfen ob Zeichenvorlage existiert und dann die Zeichenvorlage setzen.
+	If modus = &quot;Lösung&quot; Then
+	 	ExistiertZeichenvorlage(&quot;Lösung&quot;)
+ 		oFrameC = oFrame.createTextCursor()
+		oFrameC.CharStyleName = &quot;Lösung&quot;
+		oFrame.Text.String = &quot;Lösung&quot;	&apos;Beispieltext
+	End If
+	
+End Sub
+
+Sub formel_einfuegen(modus as string)
+
+	&apos;Wenn nötig Selectierte Grafiken, Zeichenobjekte ... deselektieren
+	dim document   as object
+	dim dispatcher as object
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	dispatcher.executeDispatch(document, &quot;.uno:Escape&quot;, &quot;&quot;, 0, Array())
+
+	oSelection = thisComponent.CurrentSelection
+	if not oSelection.supportsService(&quot;com.sun.star.text.TextRanges&quot;) then exit sub
+	
+	&apos;Formel erstellen
+	oCursor = ThisComponent.CurrentController.getViewCursor()
+	oCursor.gotoRange(oCursor.getEnd(), False)
+
+	oMath = ThisComponent.createInstance(&quot;com.sun.star.text.TextEmbeddedObject&quot;)
+	oMath.CLSID = &quot;078B7ABA-54FC-457F-8551-6147e776a997&quot;
+	
+	&apos;Formel in Dokument einfügen
+	oMath.AnchorType = com.sun.star.text.TextContentAnchorType.AS_CHARACTER
+ 	oCursor.Text.insertTextContent(oCursor, oMath, False)
+	
+	&apos;Bei Rahmen mit Lösungsinhalt überprüfen ob Zeichenvorlage existiert und dann die Zeichenvorlage setzen.
+	If modus = &quot;Lösung&quot; Then
+		oMath.EmbeddedObject.Component.formula = &quot;color green {a^2 + b^2 = bold {c^2}}&quot;
+	Else 
+		oMath.EmbeddedObject.Component.formula = &quot;a^2 + b^2 = c^2&quot;
+	End If
+	
+	AdaptFormulaTextFontAndSizeToEnvironment &apos;Alle Formeln an Schriftgrössen und Schriftarten anpassen
+	
+End Sub
+
+
+
+Sub bild_einfuegen()
+
+	&apos;Wenn nötig Selectierte Grafiken, Zeichenobjekte ... deselektieren
+	dim document   as object
+	dim dispatcher as object
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	dispatcher.executeDispatch(document, &quot;.uno:Escape&quot;, &quot;&quot;, 0, Array())
+
+	&apos;Auswahldialog aufrufen
+	oFilePickerDlg = createUnoService( &quot;com.sun.star.ui.dialogs.FilePicker&quot; )
+	oFilePickerDlg.appendFilter(&quot;Images&quot;,&quot;*.jpg;*.jpeg;*.gif;*.bmp;*.png;*.svg;&quot;)
+	oFilePickerDlg.appendFilter(&quot;All files&quot;,&quot;*.*&quot;)
+	oFilePickerDlg.MultiSelectionMode = False
+	nResult = oFilePickerDlg.execute
+	
+	&apos;Abbrechen, falls nichts ausgewählt wurde
+	If nResult = 0 Then Exit Sub
+	
+	&apos;Bildpfad auslesen	
+	sImgPath = oFilePickerDlg.Files(0)
+
+
+	oBitmaps = thisComponent.createInstance( &quot;com.sun.star.drawing.BitmapTable&quot; )
+	sInternalPicName = &quot;Bild&quot;
+	Do While oBitmaps.hasByName(sInternalPicName)
+		sInternalPicName = sInternalPicName &amp; &quot;i&quot;
+	Loop
+	oBitmaps.insertByName(sInternalPicName, sImgPath )
+	
+	&apos;Fehlermeldung und Abbruch, falls das Bild nicht eingefügt werden konnte
+	If NOT oBitmaps.hasByName(sInternalPicName) Then
+		MsgBox(&quot;Ausgewählte Datei konnte nicht als Grafik eingefügt werden&quot;,48,&quot;Fehler&quot;)
+		Exit Sub
+	End If
+	
+	
+	oPic = oBitmaps.getByName(sInternalPicName)
+	
+	oGraph = thisComponent.createInstance(&quot;com.sun.star.text.GraphicObject&quot;)
+	With oGraph
+	   .GraphicURL = oPic
+	   .AnchorType = com.sun.star.text.TextContentAnchorType.AT_FRAME
+	End With
+
+	&apos;Bild in Dokument einfügen
+	oCursor = thisComponent.CurrentController.getViewCursor
+	If NOT isEmpty(oCursor.TextTable) Then
+		oCursor.Cell.insertTextContent(oCursor,oGraph,False)
+	ElseIf NOT isEmpty(oCursor.TextFrame) Then
+		oCursor.TextFrame.insertTextContent(oCursor,oGraph,False)
+	Else
+		thisComponent.Text.insertTextContent(oCursor,oGraph,False)
+	End If
+
+	&apos;Bildgrösse setzen
+	const cm_pro_inch = 2.54
+	const ppi = 300
+	dim pixel_pro_cm
+	
+	pixel_pro_cm = ppi / cm_pro_inch
+	
+	&apos;Orginalgrösse des Bildes in Pixel
+	Original_SizePixel = oGraph.Graphic.SizePixel
+
+	&apos;Grösse setzen
+	oGraph.Height = Original_SizePixel.Height / pixel_pro_cm *1000 	&apos;in 1/100 mm umrechnen
+	oGraph.Width= Original_SizePixel.Width / pixel_pro_cm *1000 	&apos;in 1/100 mm umrechnen
+	
+End Sub
+
+</script:module>

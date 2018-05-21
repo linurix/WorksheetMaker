@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Listenvorlagen" script:language="StarBasic">Sub multiplechoice()
+	ListenvorlageZuweisen(&quot;MultipleChoice&quot;)
+End Sub
+
+Sub multiplechoiceloesung()
+	ListenvorlageZuweisen(&quot;MultipleChoice&quot;)
+	QuadratLoesung()
+	AdaptFrameSizeToEnvironment()
+End Sub
+
+Sub Aufgaben()
+	ListenvorlageZuweisen(&quot;Aufgabe&quot;)
+End Sub
+
+Sub ListenvorlageZuweisen(Listenvorlage as String)    
+ 	ExistiertListenvorlage(Listenvorlage)
+ 	VorlagenDispatcher.VorlagenDispatcher(&quot;Listenvorlage&quot;, Listenvorlage)
+	&apos;ErstelleTextcursor().NumberingStyleName = Listenvorlage	&apos;Die Prozedur ErstelleTextcursor() ist in den Tools vorhanden und gibt ein TextObjekt zurück.
+End Sub
+
+Sub ExistiertListenvorlage(Listenvorlage as String)
+	&apos;Prüft, ob eine Listenvorlage exisitert und ruft wenn nötig die ListenvorlageErstellen() auf
+	If Not ThisComponent.StyleFamilies.getByName(&quot;NumberingStyles&quot;).hasByName(Listenvorlage) then
+		ListenvorlageErstellen(Listenvorlage)
+	end if	
+End Sub
+
+Sub ListenvorlageErstellen(Listenvorlage as String)
+
+	Dim oNumberingStyle, vStyleNeu 
+	
+	oNumberingStyle = ThisComponent.StyleFamilies.getByName(&quot;NumberingStyles&quot;)
+	
+	&apos;Überprüfen, ob die Listenvorlage schon besteht. Wenn ja, Prozedur abbrechen
+	If oNumberingStyle.hasByName(Listenvorlage) then
+		Exit Sub
+	End If
+
+	&apos;Meldung, dass nun eine neue Listenvorlage erstellt wird.	
+	msgbox &quot;Es wird eine Listenvorlage mit dem Namen &apos;&quot; &amp; Listenvorlage &amp; &quot;&apos; erstellt. Diese kann später manuell angepasst werden.&quot;
+
+	&apos;Neue Listenvorlage erstellen
+	vStyleNeu = ThisComponent.createInstance(&quot;com.sun.star.style.NumberingStyle&quot;)
+	oNumberingStyle.insertByName(Listenvorlage, vStyleNeu) 	
+	
+	Select Case Listenvorlage
+		
+		&apos;+++ Listenvorlage Aufgabe erstellen
+		Case &quot;Aufgabe&quot;
+					
+			oNumberingRules = vStyleNeu.NumberingRules
+			
+			&apos;Ebene 1: A1)		
+			oNumberingRule=oNumberingRules.getByIndex(0)
+			oNumberingRule(0).Name=&quot;Adjust&quot;: 				oNumberingRule(0).Value = 3
+			oNumberingRule(1).Name=&quot;ParentNumbering&quot;: 		oNumberingRule(1).Value = 1
+			oNumberingRule(2).Name=&quot;Prefix&quot;: 				oNumberingRule(2).Value = &quot;A&quot;
+			oNumberingRule(3).Name=&quot;Suffix&quot;:				oNumberingRule(3).Value = &quot;)&quot;
+			oNumberingRule(4).Name=&quot;CharStyleName&quot;: 		oNumberingRule(4).Value = &quot;Default&quot;
+			oNumberingRule(5).Name=&quot;StartWith&quot;: 			oNumberingRule(5).Value = 1
+			oNumberingRule(6).Name=&quot;PositionAndSpaceMode&quot;:	oNumberingRule(6).Value = 1
+			oNumberingRule(7).Name=&quot;LabelFollowedBy&quot;: 		oNumberingRule(7).Value = 0
+			oNumberingRule(8).Name=&quot;ListtabStopPosition&quot;: 	oNumberingRule(8).Value = 1500
+			oNumberingRule(9).Name=&quot;FirstLineIndent&quot;: 		oNumberingRule(9).Value = -1500
+			oNumberingRule(10).Name=&quot;IndentAt&quot;: 			oNumberingRule(10).Value= 1500
+			oNumberingRule(11).Name=&quot;NumberingType&quot;:		oNumberingRule(11).Value= 4
+			oNumberingRules.replaceByIndex(0, oNumberingRule)
+			
+			&apos;Regeln der Listenvorlage zuweisen
+			vStyleNeu.NumberingRules = oNumberingRules
+			
+			&apos;Ebene 2: A1.a)
+			oNumberingRule=oNumberingRules.getByIndex(1)
+			oNumberingRule(0).Name=&quot;Adjust&quot;: 				oNumberingRule(0).Value = 3
+			oNumberingRule(1).Name=&quot;ParentNumbering&quot;: 		oNumberingRule(1).Value = 2
+			oNumberingRule(2).Name=&quot;Prefix&quot;: 				oNumberingRule(2).Value = &quot;A&quot;
+			oNumberingRule(3).Name=&quot;Suffix&quot;:				oNumberingRule(3).Value = &quot;)&quot;
+			oNumberingRule(4).Name=&quot;CharStyleName&quot;: 		oNumberingRule(4).Value = &quot;Default&quot;
+			oNumberingRule(5).Name=&quot;StartWith&quot;: 			oNumberingRule(5).Value = 1
+			oNumberingRule(6).Name=&quot;PositionAndSpaceMode&quot;:	oNumberingRule(6).Value = 1
+			oNumberingRule(7).Name=&quot;LabelFollowedBy&quot;: 		oNumberingRule(7).Value = 0
+			oNumberingRule(8).Name=&quot;ListtabStopPosition&quot;: 	oNumberingRule(8).Value = 1500
+			oNumberingRule(9).Name=&quot;FirstLineIndent&quot;: 		oNumberingRule(9).Value = -1500
+			oNumberingRule(10).Name=&quot;IndentAt&quot;: 			oNumberingRule(10).Value= 1500
+			oNumberingRule(11).Name=&quot;NumberingType&quot;:		oNumberingRule(11).Value= 1
+			oNumberingRules.replaceByIndex(1, oNumberingRule)
+
+			&apos;Regeln der Listenvorlage zuweisen
+			vStyleNeu.NumberingRules = oNumberingRules
+			
+			&apos;Ebenen 3-10: Aufzählungszeichen Punkt mit Einzug, Pro Ebene 0.5 cm Einzug		
+			for i=2 to 9
+				&apos;Nummerierungstyp auf Bullet setzen
+				oNumberingRule=oNumberingRules.getByIndex(i)
+				oNumberingRule(0).Name=&quot;Adjust&quot;: 				oNumberingRule(0).Value = 3
+				oNumberingRule(1).Name=&quot;ParentNumbering&quot;: 		oNumberingRule(1).Value = i+1
+				oNumberingRule(2).Name=&quot;Prefix&quot;: 				oNumberingRule(2).Value = &quot;&quot;
+				oNumberingRule(3).Name=&quot;Suffix&quot;:				oNumberingRule(3).Value = &quot;&quot;
+				oNumberingRule(4).Name=&quot;CharStyleName&quot;: 		oNumberingRule(4).Value = &quot;&quot;
+				oNumberingRule(5).Name=&quot;StartWith&quot;: 			oNumberingRule(5).Value = 1
+				oNumberingRule(6).Name=&quot;PositionAndSpaceMode&quot;:	oNumberingRule(6).Value = 1
+				oNumberingRule(7).Name=&quot;LabelFollowedBy&quot;: 		oNumberingRule(7).Value = 0
+				oNumberingRule(8).Name=&quot;ListtabStopPosition&quot;: 	oNumberingRule(8).Value = i*500 + 1000
+				oNumberingRule(9).Name=&quot;FirstLineIndent&quot;: 		oNumberingRule(9).Value = -500
+				oNumberingRule(10).Name=&quot;IndentAt&quot;: 			oNumberingRule(10).Value= i*500 + 1000
+				oNumberingRule(11).Name=&quot;NumberingType&quot;:		oNumberingRule(11).Value= 6
+
+				&apos;Nummerierungstyp setzten, sonst kann nacher der Nummerierungszeichen nicht gesettz werden
+				oNumberingRules.replaceByIndex(i, oNumberingRule)			
+			
+				&apos;&apos;Nummerierungszeichen setzen
+				oNumberingRule=oNumberingRules.getByIndex(i)
+				oNumberingRule(12).Name=&quot;BulletId&quot;: 			oNumberingRule(12).Value=8226
+				oNumberingRule(13).Name=&quot;BulletChar&quot;: 			oNumberingRule(13).Value=&quot;•&quot;
+				oNumberingRule(14).Name=&quot;BulletFontName&quot;:		oNumberingRule(14).Value=&quot;&quot;
+				oNumberingRules.replaceByIndex(i, oNumberingRule)
+
+				&apos;Regeln der Listenvorlage zuweisen
+				vStyleNeu.NumberingRules = oNumberingRules
+			next
+				
+			&apos;Doku: http://www.openoffice.org/api/docs/common/ref/com/sun/star/text/NumberingLevel.html
+		&apos;--- Aufgabe
+		
+		&apos;+++ Listenvorlage Multiplechoice erstellen
+		Case &quot;MultipleChoice&quot;
+		
+			oNumberingRules = vStyleNeu.NumberingRules
+		
+			for i=0 to 9
+				&apos;Nummerierungstyp auf Bullet setzen
+				oNumberingRule=oNumberingRules.getByIndex(i)
+				oNumberingRule(0).Name=&quot;Adjust&quot;: 				oNumberingRule(0).Value = 3
+				oNumberingRule(1).Name=&quot;ParentNumbering&quot;: 		oNumberingRule(1).Value = i+1
+				oNumberingRule(2).Name=&quot;Prefix&quot;: 				oNumberingRule(2).Value = &quot;&quot;
+				oNumberingRule(3).Name=&quot;Suffix&quot;:				oNumberingRule(3).Value = &quot;&quot;
+				oNumberingRule(4).Name=&quot;CharStyleName&quot;: 		oNumberingRule(4).Value = &quot;&quot;
+				oNumberingRule(5).Name=&quot;StartWith&quot;: 			oNumberingRule(5).Value = 1
+				oNumberingRule(6).Name=&quot;PositionAndSpaceMode&quot;:	oNumberingRule(6).Value = 1
+				oNumberingRule(7).Name=&quot;LabelFollowedBy&quot;: 		oNumberingRule(7).Value = 0
+				oNumberingRule(8).Name=&quot;ListtabStopPosition&quot;: 	oNumberingRule(8).Value = 1000
+				oNumberingRule(9).Name=&quot;FirstLineIndent&quot;: 		oNumberingRule(9).Value = -1000
+				oNumberingRule(10).Name=&quot;IndentAt&quot;: 			oNumberingRule(10).Value= 1000
+				oNumberingRule(11).Name=&quot;NumberingType&quot;:		oNumberingRule(11).Value= 6
+
+				&apos;Nummerierungstyp setzten, sonst kann nacher der Nummerierungszeichen nicht gesettz werden
+				oNumberingRules.replaceByIndex(i, oNumberingRule)			
+			
+				&apos;&apos;Nummerierungszeichen setzen
+				oNumberingRule=oNumberingRules.getByIndex(i)
+				oNumberingRule(12).Name=&quot;BulletId&quot;: 			oNumberingRule(12).Value=8226
+				oNumberingRule(13).Name=&quot;BulletChar&quot;: 			oNumberingRule(13).Value=&quot;&quot;
+				oNumberingRule(14).Name=&quot;BulletFontName&quot;:		oNumberingRule(14).Value=&quot;Webdings&quot;
+				oNumberingRules.replaceByIndex(i, oNumberingRule)
+
+				&apos;Regeln der Listenvorlage zuweisen
+				vStyleNeu.NumberingRules = oNumberingRules
+			next
+		&apos;--- Multiplechoice
+	End Select
+						
+End Sub
+
+
+Sub QuadratLoesung()
+	
+	Dim oFrame, oCursor
+	
+	&apos;Rahmen erstellen
+	oFrame = ThisComponent.createInstance( &quot;com.sun.star.text.TextFrame&quot;)
+	
+	&apos;Formatvorlage RahmenLösung zuweisen
+	ExistiertRahmenvorlage(&quot;RahmenLösung&quot;)
+	oFrame.FrameStyleName = &quot;RahmenLösung&quot;
+	
+	&apos;Rahmen in Text einfügen
+	oCursor = ThisComponent.CurrentController.getViewCursor()
+	oCursor.gotoRange(oCursor.getEnd(), False)
+	ThisComponent.Text.insertTextContent(oCursor, oFrame, false)
+		
+	&apos;Rahmen platzieren
+	With oFrame
+		.AnchorType = com.sun.star.text.TextContentAnchorType.AT_PARAGRAPH
+		.Width = 330
+		.Height = 330
+		.FrameIsAutomaticHeight = False
+		.HoriOrient = 0
+		.HoriOrientPosition = 50
+		.HoriOrientRelation = 0
+		.VertOrient = 0
+		.VertOrientPosition = 100
+		.VertOrientRelation = 0
+	End With
+	
+	&apos;Rahmen formatieren
+	Dim oLinie as new com.sun.star.table.BorderLine
+	oLinie.innerLineWidth = 0
+	oLinie.outerLIneWidth = 0
+	With oFrame
+		.backColor = GRUEN		
+		.rightBorder = oLinie
+		.leftBorder = oLinie
+		.topBorder = oLinie
+		.bottomBorder = oLinie
+	End With
+	
+	RahmenBennen(oFrame, &quot;MultipleChoiceLösung&quot;)
+	
+End Sub
+
+</script:module>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Gitternetz" script:language="StarBasic">Public oDoc as object
+Public oLinie as object
+Public oTxtCur as Object
+
+&apos;Dialog
+Dim dlg, dlgBeschreibung As Object
+
+
+Sub GitternetzDialogAufrufen()
+	&apos;Gitternetz Dialog aufrufen
+	 DialogLibraries.loadLibrary( &quot;WorksheetMaker&quot; )
+	dlgBeschreibung = DialogLibraries.WorksheetMaker.Gitternetz 
+	dlg = CreateUnoDialog(dlgBeschreibung)
+	dlg.Execute() 
+End sub
+
+Sub GitternetzDialogBeenden()
+	&apos;Dialog schliessen
+	dlg.endExecute() 
+End sub
+
+Sub GitternetzAusDialog()
+	&apos;Liest die Eingabewerte des Dialogs aus ...
+	textabstand = dlg.getControl(&quot;textabstand&quot;).text
+	abstand = dlg.getControl(&quot;abstand&quot;).text
+	hoehe = dlg.getControl(&quot;hoehe&quot;).text
+	breite = dlg.getControl(&quot;breite&quot;).text
+	
+	&apos;... und erstellt aus diesen ein Gitternetz
+	Gitternetz(abstand, breite, hoehe, textabstand) &apos;angaben in mm
+	
+	&apos;Dialog Schliessen
+	GitternetzDialogBeenden()
+	
+End sub
+
+Sub Gitternetz(abstand as integer, breite as integer, hoehe as integer, aussenabstand as integer)
+
+ 	&apos;Gruppierungs-Objekt für das Gitternetz erstellen
+ 	oShapeGroup = createUnoService(&quot;com.sun.star.drawing.ShapeCollection&quot;)
+ 	
+	&apos; Längenangaben von mm in 1/1000cm umrechnen
+    abstand = abstand*100
+    breite = breite*100
+    hoehe = hoehe*100
+    aussenabstand = aussenabstand*100
+	
+    &apos;Anzahl Linien Berechnen
+    anzahl_hLinien = hoehe / abstand
+    anzahl_vLinien = breite / abstand
+    
+    &apos; Horizontale Linien
+	for horizontal = 0 to anzahl_hLinien
+	
+		&apos;Position der Linien bestimmen
+		HoriOrientPosition = 0 
+		VertOrientPosition = abstand * horizontal
+		
+		&apos; Horizontale Linien zeichnen
+		LinienZeichnen(HoriOrientPosition, VertOrientPosition, 0, breite)
+		
+		&apos; Linie dem Gitternetz hinzufügen, welches später gruppiert wird
+		oShapeGroup.add(oLinie)		
+	next
+	
+	
+    &apos; Vertikale Linien
+	for vertikal = 0 to anzahl_vLinien
+	
+		&apos;Position der Linien bestimmen
+		HoriOrientPosition = abstand * vertikal
+		VertOrientPosition = 0
+		
+		&apos; Vertikale Linien zeichnen
+		LinienZeichnen(HoriOrientPosition, VertOrientPosition, hoehe, 0)
+		
+		&apos; Linie dem Gitternetz hinzufügen, welches später gruppiert wird
+		oShapeGroup.add(oLinie)
+		
+	next
+	
+	&apos;Gitternetz gruppieren
+	oGruppe = ThisComponent.DrawPage.group(oShapeGroup)
+	With oGruppe
+		.TopMargin = aussenabstand
+		.BottomMargin = aussenabstand
+		.LeftMargin = aussenabstand
+		.RightMargin = aussenabstand
+	end With
+	
+End Sub
+
+
+Function LinienZeichnen(x as integer, y as integer, hoehe as integer, breite as integer)
+ 	
+ 	&apos;Neue Linie vorbereiten
+	oLinie = ThisComponent.createInstance(&quot;com.sun.star.drawing.LineShape&quot;)
+	
+	&apos;Grösse der Linien bestimmen
+	Dim size as new com.sun.star.awt.Size     
+    size.Height = hoehe	
+	size.Width  = breite 
+	
+	&apos;Linien formatieren
+	With oLinie
+   		.LineColor    = rgb(0, 0, 0)
+		.AnchorType   = com.sun.star.text.TextContentAnchorType.AT_PARAGRAPH
+		.TextWrap     = com.sun.star.text.WrapTextMode.THROUGHT
+		.lineWidth    = 0
+		.sizeProtect  = true
+		.MoveProtect  = true
+		.HoriOrientPosition = x
+		.VertOrientPosition = y	
+		.Size 		  = size	
+	End With
+   	
+	&apos;Wenn nötig Selectierte Grafiken, Zeichenobjekte ... deselektieren
+	dim document   as object
+	dim dispatcher as object
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	dispatcher.executeDispatch(document, &quot;.uno:Escape&quot;, &quot;&quot;, 0, Array())
+	
+	&apos;Einfügeort bestimmen
+	oViewC = ThisComponent.getCurrentController().getViewCursor()
+	
+	If isEmpty(oViewC.String) then
+		msgbox(&quot;Es ist ein Bild oder Grafik markiert. Gitternetz einfügen ist nicht möglich&quot;)
+	elseif isEmpty(oViewC.textTable) then
+		&apos;Linien im Text einfügen
+    	oTextC = ThisComponent.text.createTextCursorByRange(oViewC)
+    	ThisComponent.text.insertTextContent(oViewC, oLinie, false)
+	Else
+		&apos;Linien in Tabelle einfügen
+		oZelle = oViewC.Cell
+    	oTextC = oZelle.createTextCursorByRange(oViewC) 
+    	oTextC.getText().insertTextContent(oViewC, oLinie, false)
+	Endif
+	
+End Function
+</script:module>

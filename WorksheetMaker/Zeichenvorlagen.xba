@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Zeichenvorlagen" script:language="StarBasic">
+REM +++ Zeichenvorlagen zuweisen
+Sub button_Loesung
+	ZeichenvorlageZuweisen(&quot;Lösung&quot;)
+End Sub
+
+Sub button_Luecke
+	ZeichenvorlageZuweisen(&quot;Lücke&quot;)
+End Sub
+
+Sub button_Standard
+	ZeichenvorlageZuweisen(&quot;Standard&quot;)
+End Sub
+
+Sub button_Markiert
+	ZeichenvorlageZuweisen(&quot;Markiert&quot;)
+End Sub
+
+
+REM +++ Formatvorlagen 
+Sub	set_CharacterStyle(Style as String, Farbe as String, Drucken as Boolean)
+	
+	Dim oDoc
+	oDoc = ThisComponent
+	oStyles = oDoc.StyleFamilies
+	oCharacterStyles = oStyles.getByName(&quot;CharacterStyles&quot;)
+	
+	If Style = &quot;Markiert&quot; Then
+		If oCharacterStyles.hasByName(&quot;Markiert&quot;) then
+			myStyle = oCharacterStyles.getByName(&quot;Markiert&quot;)&apos;Name anpassen
+			If(Drucken) then
+				myStyle.CharBackColor = GELB
+			Else
+				myStyle.CharBackColor = WEISS
+			EndIf
+		EndIf
+	Else 
+		If oCharacterStyles.hasByName(Style) then
+			myStyle = oCharacterStyles.getByName(Style)&apos;Name anpassen
+			myStyle.CharColor = Farbe
+		EndIf
+	EndIf
+End Sub
+REM --- Formatvorlagen
+
+
+
+Sub ZeichenvorlageErstellen(Zeichenvorlage as String)
+
+	Dim oDoc, Rand as object
+	Dim border as new com.sun.star.table.BorderLine
+	Dim vCharStyles
+	Dim vStyleNeu 
+	
+	msgbox &quot;Zuerst eine Zeichevorlage mit dem Namen &apos;&quot; &amp; Zeichenvorlage &amp; &quot;&apos; erstellen. Diese wird nun automatisch erstellt und kann manuell angepasst werden&quot;
+
+	oDoc = ThisComponent
+	vCharStyles = oDoc.StyleFamilies.getByName(&quot;CharacterStyles&quot;)
+    
+	If Not vCharStyles.hasByName(Zeichenvorlage) then
+	
+		vStyleNeu = oDoc.createInstance(&quot;com.sun.star.style.CharacterStyle&quot;)
+		vCharStyles.insertByName(Zeichenvorlage, vStyleNeu) 	
+	
+		myStyle = vCharStyles.getByName(Zeichenvorlage)
+	
+		Select Case Zeichenvorlage
+			
+			Case &quot;Lösung&quot;
+   				with myStyle
+       				.CharColor = GRUEN	
+   				end with
+   				
+   			Case &quot;Lücke&quot;
+   				ExistiertZeichenvorlage(&quot;Lösung&quot;)
+   					with myStyle
+   					.ParentStyle = &quot;Lösung&quot;
+       				.CharKerning = 353	 &apos;283.5pt = 10000
+       				.CharUnderline = 1
+       				.CharUnderlineColor = SCHWARZ       				
+   				end with
+   				
+   			Case &quot;Markiert&quot;
+   				with myStyle
+   					.CharBackColor = GELB
+   				end with
+   			
+		End Select
+	EndIf				
+End Sub
+REM --- Zeichenvorlagen zuweisen
+
+
+
+Sub ExistiertZeichenvorlage(Zeichenvorlage as String)
+	if not ThisComponent.StyleFamilies.getByName(&quot;CharacterStyles&quot;).hasByName(Zeichenvorlage) then
+		ZeichenvorlageErstellen(Zeichenvorlage)
+	end if	
+End Sub
+
+Sub ZeichenvorlageZuweisen(Zeichenvorlage as String)
+ 	ExistiertZeichenvorlage(Zeichenvorlage)
+ 	VorlagenDispatcher.VorlagenDispatcher(&quot;Zeichenvorlage&quot;, Zeichenvorlage)
+End Sub
+</script:module>
